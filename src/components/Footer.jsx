@@ -33,7 +33,7 @@ let Footer = () => {
             Ethereum Gas Tracker
           </div>
           <div className="footer-buttons">
-            <a href="https://github.com/yourusername/Ethereum_Gas_Tracker/fork" 
+            <a href="https://github.com/0xmetaschool/ethereum-gas-tracker/fork" 
                className="fork-button">
               Fork and Build Your Own
             </a>
