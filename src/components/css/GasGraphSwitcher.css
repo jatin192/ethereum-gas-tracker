@@ -1,0 +1,50 @@
+.class_1 {
+    font-family: 'Space Grotesk', sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    max-width: 1300px;
+    height: 500px;
+    margin: 20px auto;
+   
+  }
+  
+  .class_2 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .class_2 button {
+    background-color: #282828;
+    color: cyan;
+    border: 2px solid cyan;
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+  
+  .class_2 button:hover {
+    background-color: cyan;
+    border-color:rgb(4, 4, 4);
+    color: #121212;
+    font-weight: bold;
+  }
+  
+  .class_2 button.active {
+    background-color:cyan;
+    color: #121212;
+    border-color:rgb(4, 4, 4);
+    font-weight: bold;
+  }
+  
+  .class_1 > div {
+    position: relative;
+    height: 40px;
+    width: 100%;
+  }
