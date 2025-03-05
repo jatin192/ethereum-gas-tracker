@@ -36,7 +36,7 @@ This Ethereum Gas Tracker application includes the following features:
 ### How to Run the Application
 1. Clone the repository:
     ```bash
-    git clone https://github.com/0xmetaschool/ethereum-gas-tracker.git
+    git clone https://github.com/jatin192/ethereum-gas-tracker.git
     ```
 2. Install Dependencies: Navigate to the project directory and install the necessary dependencies:
     ```bash
