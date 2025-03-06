@@ -3,6 +3,18 @@ Ethereum Gas Tracker is designed for real-time Ethereum gas tracking platforms, 
 
 Built with React.js, Node.js, and Etherscan API, this open-source template helps developers to build real-time Ethereum gas fee tracker displaying live gas prices, transaction costs, and trends. This template then allows users to plan your Ethereum transactions efficiently with accurate data.
 
+## Screenshots
+
+<table>
+  <tr>
+    <td><img src="https://github.com/0xmetaschool/ethereum-gas-tracker/blob/main/public/ethereum-gas-tracker-web3-template-header.png?raw=true" alt="Ethereyum Gas Tracker Template Header" width="600"></td>
+    <td><img src="https://github.com/0xmetaschool/ethereum-gas-tracker/blob/main/public/ethereum-gas-tracker-web3-template-transaction-table.png?raw=true" alt="Ethereyum Gas Tracker Template Transaction Table" width="600"></td>
+    </tr>
+       <tr>
+    <td><img src="https://github.com/0xmetaschool/ethereum-gas-tracker/blob/main/public/ethereum-gas-tracker-web3-template-graph.png?raw=true" alt="Ethereyum Gas Tracker Template Graph" width="600"></td>
+  </tr>
+</table>
+
 ## Live Demo
 [https://ethereum-gas-tracker-metaschool.vercel.app/](https://ethereum-gas-tracker-metaschool.vercel.app/)
 
@@ -55,15 +67,7 @@ This Ethereum Gas Tracker application includes the following features:
     npm run dev
     ```
 
-## Screenshots
 
-<table>
-  <tr>
-    <td><img src="https://github.com/0xmetaschool/ethereum-gas-tracker/blob/main/public/ethereum-gas-tracker-web3-template-header.png?raw=true" alt="Ethereyum Gas Tracker Template Header" width="310"></td>
-    <td><img src="https://github.com/0xmetaschool/ethereum-gas-tracker/blob/main/public/ethereum-gas-tracker-web3-template-transaction-table.png?raw=true" alt="Ethereyum Gas Tracker Template Transaction Table" width="310"></td>
-    <td><img src="https://github.com/0xmetaschool/ethereum-gas-tracker/blob/main/public/ethereum-gas-tracker-web3-template-graph.png?raw=true" alt="Ethereyum Gas Tracker Template Graph" width="310"></td>
-  </tr>
-</table>
 
 ## How to use the Application
 - Open the Ethereum Gas Tracker.
