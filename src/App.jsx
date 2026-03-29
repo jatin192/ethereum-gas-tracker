@@ -6,16 +6,17 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import axios from "axios";
 import GasCards from "./components/GasCards";
 import GasTable from "./components/GasTable";
 import GasGraphSwitcher from './components/GasGraphSwitcher'
 import Footer from "./components/Footer";
 import "./App.css";
 import { Chart as ChartJS,LineElement,CategoryScale,LinearScale,PointElement,Tooltip,Legend} from "chart.js";
+import { API_KEY, ETHERSCAN_V2, etherscanGet } from "./lib/etherscanClient.js";
+
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
 
-let API_KEY = import.meta.env.VITE_ETHERSCAN_API_KEY;
+let gasPollInFlight = false;
 
 /**
  * Main App component that orchestrates the Ethereum Gas Tracker application
@@ -43,6 +44,8 @@ function App()
   // New state variables for refresh time
   let [lastRefreshed, setLastRefreshed] = useState('');
   let [nextUpdateIn, setNextUpdateIn] = useState(10);
+  /** Bumps after each successful Etherscan refresh so graphs add one point per poll. */
+  let [gasFetchNonce, setGasFetchNonce] = useState(0);
   let [basefee_i, set_basefee] = useState('');
   let [transactionData, setTransactionData] = useState([
     { action: "OpenSea: Sale", gasLimit: 71645 },
@@ -75,17 +78,52 @@ function App()
    */
   let fetchGasData = async () => 
     {
+    if (gasPollInFlight) {
+      return;
+    }
+    gasPollInFlight = true;
     try {
-      let gasResponse = await axios.get(
-        `https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=${API_KEY}`
+      if (!API_KEY) {
+        setError(
+          "Missing VITE_ETHERSCAN_API_KEY. Create a key at etherscan.io/apidashboard (not Alchemy/Infura), add it to .env, then restart the dev server."
+        );
+        setLoading(false);
+        return;
+      }
+      let gasResponse = await etherscanGet(
+        ETHERSCAN_V2("module=gastracker&action=gasoracle")
       );
-      let priceResponse = await axios.get(
-        `https://api.etherscan.io/api?module=stats&action=ethprice&apikey=${API_KEY}`
+      let priceResponse = await etherscanGet(
+        ETHERSCAN_V2("module=stats&action=ethprice")
       );
 
-      let statusResponse = await axios.get(
-        `https://api.etherscan.io/api?module=proxy&action=eth_blockNumber&apikey=${API_KEY}`
+      let statusResponse = await etherscanGet(
+        ETHERSCAN_V2("module=proxy&action=eth_blockNumber")
       );
+
+      let isOkStatus = (d) =>
+        d && (String(d.status) === "1" || d.status === 1);
+      /** Proxy eth_blockNumber often returns hex in `result` without `status: "1"`. */
+      let isHexBlockResult = (r) =>
+        typeof r === "string" && /^0x[0-9a-f]+$/i.test(r.trim());
+
+      let apiErr = (res) => {
+        let d = res.data;
+        if (isOkStatus(d)) return null;
+        let r = d?.result;
+        if (isHexBlockResult(r)) return null;
+        return typeof r === "string"
+          ? r
+          : d?.message || "Etherscan API error";
+      };
+      let errMsg =
+        apiErr(gasResponse) || apiErr(priceResponse) || apiErr(statusResponse);
+      if (errMsg) {
+        setError(errMsg);
+        setLoading(false);
+        return;
+      }
+      setError(null);
 
       let gasDataResult = gasResponse.data.result;
       let ethPriceInUsd = parseFloat(priceResponse.data.result.ethusd);
@@ -129,11 +167,16 @@ function App()
 
       setLastRefreshed(new Date().toLocaleString());
       setNextUpdateIn(10);  // Reset to 10 seconds
+      setGasFetchNonce((n) => n + 1);
 
     } 
     catch (error) 
     {
       setError("Error fetching gas or ETH price data");
+      setLoading(false);
+    }
+    finally {
+      gasPollInFlight = false;
     }
   };
 
@@ -294,7 +337,11 @@ function App()
 
           <section className="gas-graph-section glass-container">
             <h2 className="section-title"style={{ marginTop: '14px',marginLeft:'10px'}} >Gas Price Trends</h2>
-            <GasGraphSwitcher nextUpdateIn ={nextUpdateIn}></GasGraphSwitcher>
+            <GasGraphSwitcher
+              nextUpdateIn={nextUpdateIn}
+              gasData={gasData}
+              gasFetchNonce={gasFetchNonce}
+            />
           </section>
         </main>
         <Footer/>
