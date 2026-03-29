@@ -23,7 +23,6 @@ let gasPollInFlight = false;
  * Manages gas prices, ETH price, transaction data, and UI state
  * @returns {JSX.Element} The complete application UI
  */
-
 function App() 
 {
   // State management for gas tracking and UI
