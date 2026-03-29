@@ -16,7 +16,7 @@ Built with React.js, Node.js, and Etherscan API, this open-source template helps
 </table>
 
 ## Live Demo
-[https://ethereum-gas-tracker-metaschool.vercel.app/](https://ethereum-gas-tracker-metaschool.vercel.app/)
+[https://ethereum-gas-tracker-jatin192.vercel.app/](https://ethereum-gas-tracker-jatin192.vercel.app/)
 
 
 ## Features
